@@ -28,3 +28,8 @@ http 加密代理
 ## 客户端
 
 暴露类的形式进行调用
+
+
+### publish on npm 
+
+`npm publish --access public`
