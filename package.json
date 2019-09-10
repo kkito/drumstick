@@ -18,7 +18,7 @@
   "main": "lib/index",
   "types": "lib/index",
   "scripts": {
-    "clean": "rimraf lib && rimraf coverage",
+    "clean": "rm -rf lib && rm -rf coverage",
     "format": "prettier --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "prepublishOnly": "npm run build",
@@ -38,7 +38,6 @@
     "coveralls": "^3.0.2",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
-    "rimraf": "^2.6.2",
     "ts-jest": "^23.10.3",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
