@@ -9,8 +9,6 @@
 * config travis ci to run unittest
 * config travis ci to deploy to npm
 
-------
-
 ### 0.1.0
 
 init
