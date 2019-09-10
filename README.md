@@ -1,4 +1,5 @@
 # Drumstick 🍗🍗🍗
+[![Build Status](https://www.travis-ci.org/kkito/drumstick.svg?branch=master)](https://www.travis-ci.org/kkito/drumstick)
 
 ## 
 
