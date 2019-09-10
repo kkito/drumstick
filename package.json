@@ -1,16 +1,16 @@
 {
-  "name": "drumstick",
-  "version": "0.0.0",
+  "name": "@kkito/drumstick",
+  "version": "0.1.0",
   "description": "drumstick",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/kkito/drumstick",
   "author": {
-    "name": "",
-    "email": "",
-    "url": ""
+    "name": "kkito",
+    "email": "kkitokkito@126.com",
+    "url": "http://kkito.cn"
   },
   "keywords": [
-    ""
+    "nodejs","socket", "http", "proxy", "encrypt"
   ],
   "files": [
     "lib"
