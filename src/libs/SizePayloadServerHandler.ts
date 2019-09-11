@@ -4,11 +4,16 @@ import { BasicServerHandler } from './BasicServerHandler';
 
 export class SizePayloadServerHandler extends BasicServerHandler {
   protected payloadSize: number | null = null;
+  protected payloadPrepareCallback?:(data:Buffer)=>void
 
   public write(content: string | Buffer): void {
     const buf = content instanceof Buffer ? content : Buffer.from(content);
     const sizeAndBuffer = BufferUtil.sizeWithBuffer(buf);
     super.write(sizeAndBuffer);
+  }
+
+  public setPayloadPrepareCallback(cb:(data:Buffer)=>void) {
+    this.payloadPrepareCallback = cb
   }
 
   protected onDataReceive(data: Buffer): void {
@@ -31,6 +36,9 @@ export class SizePayloadServerHandler extends BasicServerHandler {
   // tslint:disable-next-line:no-empty
   protected onPayloadPrepared(payload: Buffer): void {
     LogUtil.debug(`onPayloadPrepread: size ${payload.length}`);
+    if (this.payloadPrepareCallback) {
+      this.payloadPrepareCallback(payload)
+    }
   }
 
   protected onCompleteData(): void {
