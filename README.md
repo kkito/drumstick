@@ -1,5 +1,6 @@
 # Drumstick 🍗🍗🍗
 [![Build Status](https://www.travis-ci.org/kkito/drumstick.svg?branch=master)](https://www.travis-ci.org/kkito/drumstick)
+[![npm version](https://badge.fury.io/js/%40kkito%2Fdrumstick.svg)](https://badge.fury.io/js/%40kkito%2Fdrumstick)
 
 ## 
 
