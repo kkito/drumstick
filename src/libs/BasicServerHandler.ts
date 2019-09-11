@@ -5,6 +5,7 @@ export class BasicServerHandler {
   protected client: net.Socket;
   protected datas: Buffer[];
   protected dataSize = 0;
+  protected dataReceiveCallback?:(data:Buffer) => void
 
   constructor(client: net.Socket) {
     this.client = client;
@@ -30,6 +31,10 @@ export class BasicServerHandler {
     });
   }
 
+  public setDataReceiveCallback(cb:(data:Buffer)=>void) {
+    this.dataReceiveCallback = cb
+  }
+
   public write(content: string | Buffer): void {
     this.client.write(content);
   }
@@ -42,12 +47,9 @@ export class BasicServerHandler {
     this.client.end();
   }
 
-  // tslint:disable-next-line:variable-name
-  protected onDataReceive(_data: Buffer): void {
-    // console.log(data);
-    // console.log(`content is ${data}`);
-    // console.log(this.dataSize);
-    // console.log(this.datas.length);
-    // this.client.end()
+  protected onDataReceive(data: Buffer): void {
+    if (this.dataReceiveCallback) {
+      this.dataReceiveCallback(data)
+    }
   }
 }
