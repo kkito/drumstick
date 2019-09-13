@@ -3,6 +3,7 @@
 ### 0.3.1
 
 * fix bug response not in order in one request
+* fix bug throw exception when client ended event (server close) 
 
 ### 0.3.0
 
