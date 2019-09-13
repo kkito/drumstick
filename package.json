@@ -23,11 +23,11 @@
   "types": "lib/index",
   "scripts": {
     "clean": "rm -rf lib && rm -rf coverage",
-    "format": "prettier --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
+    "format": "prettier --write \"{src,__tests__}/**/*.ts\"",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "prepublishOnly": "npm run build",
     "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
-    "build": "tsc --pretty && git add -f lib",
+    "build": "tsc --pretty",
     "test": "jest",
     "coverage": "jest --coverage",
     "watch": "npm run build -- --watch",
@@ -63,7 +63,8 @@
   },
   "lint-staged": {
     "**/*.ts": [
-      "tslint --fix",
+      "prettier --write",
+      "tslint --fix --force --format verbose",
       "git add"
     ]
   }
