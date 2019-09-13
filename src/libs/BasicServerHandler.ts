@@ -12,8 +12,6 @@ export class BasicServerHandler {
     this.datas = [];
 
     client.on('data', data => {
-      this.datas.push(data);
-      this.dataSize += data.length;
       this.onDataReceive(data);
     });
 
@@ -48,6 +46,8 @@ export class BasicServerHandler {
   }
 
   protected onDataReceive(data: Buffer): void {
+    this.datas.push(data);
+    this.dataSize += data.length;
     if (this.dataReceiveCallback) {
       this.dataReceiveCallback(data)
     }
