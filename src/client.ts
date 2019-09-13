@@ -1,7 +1,7 @@
 // import * as iconv from 'iconv-lite';
 // import * as net from 'net'
 // import * as fs from 'fs';
-const options = { port: 4821, host: "127.0.0.1" };
+const options = { port: 4812, host: "127.0.0.1" };
 // import { HttpUtil } from "./utils/HttpUtil";
 // const socket = net.connect({port: 4821 , host: '127.0.01'} , () => {
 //   socket.write('hello world')
@@ -29,6 +29,11 @@ const options = { port: 4821, host: "127.0.0.1" };
 // }
 
 import { DrumstickClient } from "./libs/DrumstickClient";
+async function timeout(millsecond: number) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(), millsecond);
+  });
+}
 async function main2() {
   const client = new DrumstickClient(options, "testkey");
   // let result = await client.request('http://www.baidu.com/');
@@ -44,7 +49,7 @@ async function main2() {
   // result = await client.request('http://www.baidu.com/');
   // console.log(result.body);
   try {
-    const result = await client.request(
+    let result = await client.request(
       "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_86d58ae1.png",
       {},
       "binary"
@@ -52,6 +57,13 @@ async function main2() {
     // const result = await client.request('http://www.baidu.com/');
     console.log(result.body.length);
     console.log(result.headers);
+    const url =
+      "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_86d58ae1.png";
+    result = await client.request(url, {}, "binary");
+    await timeout(200);
+    // const result = await client.request('http://www.baidu.com/');
+    console.log(result.body.length);
+    // client.close()
   } catch (err) {
     console.log(err);
   }
