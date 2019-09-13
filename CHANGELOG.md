@@ -2,7 +2,8 @@
 
 ### 0.3.0
 
-* multi request in one connection
+* multi requests in one connection
+* lint-stage support
 
 ### 0.2.0
 
