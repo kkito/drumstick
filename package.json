@@ -62,9 +62,8 @@
     }
   },
   "lint-staged": {
-    "*.es5": [
+    "**/*.ts": [
       "tslint --fix",
-      "prettier --write",
       "git add"
     ]
   }
