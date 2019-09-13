@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.3.1
+
+* fix bug response not in order in one request
+
 ### 0.3.0
 
 * multi requests in one connection
