@@ -6,6 +6,7 @@ export class BasicServerHandler {
   protected datas: Buffer[];
   protected dataSize = 0;
   protected dataReceiveCallback?: (data: Buffer) => void;
+  protected timeoutMillSeconds = 6000; // 60 seconds
 
   constructor(client: net.Socket) {
     this.client = client;
@@ -17,15 +18,18 @@ export class BasicServerHandler {
 
     client.on("close", () => {
       LogUtil.debug("client was closed");
+      this.close();
       // console.log(`new client was contected ${server.getConnections()}`)
     });
 
     client.on("error", () => {
       LogUtil.debug("error");
+      this.close();
     });
 
     client.on("timeout", () => {
       LogUtil.debug("timeout");
+      this.close();
     });
   }
 
@@ -45,7 +49,12 @@ export class BasicServerHandler {
     this.client.end();
   }
 
+  public setTimeout(timeout: number): void {
+    this.timeoutMillSeconds = timeout;
+  }
+
   protected onDataReceive(data: Buffer): void {
+    this.client.setTimeout(this.timeoutMillSeconds);
     this.datas.push(data);
     this.dataSize += data.length;
     if (this.dataReceiveCallback) {
