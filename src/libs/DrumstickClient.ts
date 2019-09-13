@@ -11,7 +11,9 @@ export class DrumstickClient extends RC4PayloadClient {
     encoding = DrumstickResponse.ENCODING_UTF8
   ): Promise<IDSResponse> {
     const params = { url, headers };
-    await this.connect();
+    if (!this.isConnected()) {
+      await this.connect();
+    }
     return new Promise((resolve, reject) => {
       this.onErrorHandler = (err: string | Error) => {
         console.log("onErrorHandler!");
