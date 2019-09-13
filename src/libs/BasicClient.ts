@@ -37,6 +37,7 @@ export class BasicClient implements IClient {
         // server end client
         console.log("ended");
         reject("ended");
+        this.triggerError("ended");
       });
       this.socket.on("data", data => {
         // console.log("on Data");
