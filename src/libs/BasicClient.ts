@@ -39,7 +39,8 @@ export class BasicClient implements IClient {
         reject("ended");
       });
       this.socket.on("data", data => {
-        console.log("on Data");
+        // console.log("on Data");
+        process.stdout.write(".");
         this.setCompleteTimer(reject);
         this.datas.push(data);
         this.dataSize += data.length;
