@@ -1,6 +1,6 @@
-import * as iconv from 'iconv-lite';
-import { RC4PayloadClient } from './RC4PayloadClient';
-import { DrumstickResponse, IDSResponse } from './Response';
+import * as iconv from "iconv-lite";
+import { RC4PayloadClient } from "./RC4PayloadClient";
+import { DrumstickResponse, IDSResponse } from "./Response";
 
 export class DrumstickClient extends RC4PayloadClient {
   protected onDataHandler?: (data: Buffer) => void;
@@ -14,7 +14,7 @@ export class DrumstickClient extends RC4PayloadClient {
     await this.connect();
     return new Promise((resolve, reject) => {
       this.onErrorHandler = (err: string | Error) => {
-        console.log('onErrorHandler!');
+        console.log("onErrorHandler!");
         reject(err);
       };
       this.onDataHandler = data => {
@@ -40,7 +40,7 @@ export class DrumstickClient extends RC4PayloadClient {
 
   protected onDecodeData(data: any): void {
     this.resetData();
-    console.log('on decode data');
+    console.log("on decode data");
     if (this.onDataHandler) {
       this.onDataHandler(data);
     }

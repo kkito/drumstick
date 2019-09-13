@@ -1,7 +1,7 @@
-import * as crypto from 'crypto';
+import * as crypto from "crypto";
 
 export class RC4Util {
-  public static readonly CRYPTO_NAME = 'rc4';
+  public static readonly CRYPTO_NAME = "rc4";
 
   /**
    * rc4 加密

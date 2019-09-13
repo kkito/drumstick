@@ -1,4 +1,4 @@
-import * as net from 'net';
+import * as net from "net";
 
 export interface IClient {
   connect(): Promise<boolean>;
@@ -28,26 +28,26 @@ export class BasicClient implements IClient {
         return resolve(true);
       });
 
-      this.socket.on('error', err => {
-        console.log('on Error');
+      this.socket.on("error", err => {
+        console.log("on Error");
         reject(err);
         this.triggerError(err);
       });
-      this.socket.on('end', () => {
-        console.log('ended');
+      this.socket.on("end", () => {
+        console.log("ended");
       });
-      this.socket.on('data', data => {
-        console.log('on Data');
+      this.socket.on("data", data => {
+        console.log("on Data");
         this.setCompleteTimer(reject);
         this.datas.push(data);
         this.dataSize += data.length;
         this.onDataReceive(data);
       });
 
-      this.socket.on('connect', () => {
-        console.log('connected');
+      this.socket.on("connect", () => {
+        console.log("connected");
       });
-      console.log('settimout');
+      console.log("settimout");
       this.socket.setTimeout(this.timeoutMillSeconds);
       this.setCompleteTimer(reject);
     });
@@ -59,7 +59,7 @@ export class BasicClient implements IClient {
 
   public enSureConnected() {
     if (!this.isConnected()) {
-      throw new Error('client is not connected!');
+      throw new Error("client is not connected!");
     }
   }
 
@@ -67,7 +67,7 @@ export class BasicClient implements IClient {
     this.enSureConnected();
     return new Promise(resolve => {
       if (this.socket == null) {
-        throw new Error('client is not connected!');
+        throw new Error("client is not connected!");
       }
       this.socket.write(content, undefined, () => {
         resolve(true);
@@ -93,14 +93,14 @@ export class BasicClient implements IClient {
     }
     this.completedTimer = setTimeout(() => {
       if (!this.isCompleted) {
-        console.log('timeout!');
+        console.log("timeout!");
         this.close();
-        console.log('timeout close!');
-        reject('timeout');
-        this.triggerError('timeout');
-        console.log('timeout reject!');
+        console.log("timeout close!");
+        reject("timeout");
+        this.triggerError("timeout");
+        console.log("timeout reject!");
       } else {
-        console.log('finished completed!');
+        console.log("finished completed!");
       }
     }, 10000);
   }

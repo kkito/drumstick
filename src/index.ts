@@ -1,2 +1,2 @@
-import { DrumstickClient } from './libs/DrumstickClient';
+import { DrumstickClient } from "./libs/DrumstickClient";
 export { DrumstickClient };

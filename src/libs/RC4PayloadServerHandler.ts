@@ -1,7 +1,7 @@
-import * as net from 'net';
-import { LogUtil } from '../utils/LogUtil';
-import { RC4Util } from '../utils/RC4Util';
-import { SizePayloadServerHandler } from './SizePayloadServerHandler';
+import * as net from "net";
+import { LogUtil } from "../utils/LogUtil";
+import { RC4Util } from "../utils/RC4Util";
+import { SizePayloadServerHandler } from "./SizePayloadServerHandler";
 
 export class RC4PayloadServerHandler extends SizePayloadServerHandler {
   protected rc4Key: string;

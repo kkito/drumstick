@@ -1,7 +1,7 @@
 // import * as iconv from 'iconv-lite';
 // import * as net from 'net'
 // import * as fs from 'fs';
-const options = { port: 4821, host: '127.0.0.1' };
+const options = { port: 4821, host: "127.0.0.1" };
 // import { HttpUtil } from "./utils/HttpUtil";
 // const socket = net.connect({port: 4821 , host: '127.0.01'} , () => {
 //   socket.write('hello world')
@@ -28,9 +28,9 @@ const options = { port: 4821, host: '127.0.0.1' };
 //   client.close();
 // }
 
-import { DrumstickClient } from './libs/DrumstickClient';
+import { DrumstickClient } from "./libs/DrumstickClient";
 async function main2() {
-  const client = new DrumstickClient(options, 'testkey');
+  const client = new DrumstickClient(options, "testkey");
   // let result = await client.request('http://www.baidu.com/');
   // const content = iconv.decode(Buffer.from(result.body), 'gbk');
   // content = iconv.decode(Buffer.from(content), 'gbk');
@@ -45,9 +45,9 @@ async function main2() {
   // console.log(result.body);
   try {
     const result = await client.request(
-      'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_86d58ae1.png',
+      "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_86d58ae1.png",
       {},
-      'binary'
+      "binary"
     );
     // const result = await client.request('http://www.baidu.com/');
     console.log(result.body.length);

@@ -18,7 +18,7 @@ export class BufferUtil {
     sizeBuffer: Buffer
   ): { size: number; payload: Buffer } {
     if (sizeBuffer.length <= 4) {
-      throw new Error('invalid size of givien buffer');
+      throw new Error("invalid size of givien buffer");
     }
     const size = sizeBuffer.readInt32BE(0);
     const payload = sizeBuffer.slice(4);

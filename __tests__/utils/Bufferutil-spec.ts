@@ -1,8 +1,8 @@
-import * as crypto from 'crypto';
-import { BufferUtil } from '../../src/utils/BufferUtil';
+import * as crypto from "crypto";
+import { BufferUtil } from "../../src/utils/BufferUtil";
 
-test('size append and extract', () => {
-  const msg = 'i am test msg';
+test("size append and extract", () => {
+  const msg = "i am test msg";
   const buf = Buffer.from(msg);
 
   const sizeBuffer = BufferUtil.sizeWithBuffer(buf);
@@ -11,7 +11,7 @@ test('size append and extract', () => {
   expect(sizeAndBuffer.payload.toString()).toEqual(msg);
 });
 
-test.skip('test', () => {
+test.skip("test", () => {
   console.log(BufferUtil);
   const a = 1;
   expect(a).toEqual(1);
@@ -27,9 +27,9 @@ test.skip('test', () => {
   console.log(buf.toJSON());
 });
 
-test.skip('rc4', () => {
-  const decipher = crypto.createDecipher('rc4', 'MY SECRET KEY');
-  const text = 'HELLO';
+test.skip("rc4", () => {
+  const decipher = crypto.createDecipher("rc4", "MY SECRET KEY");
+  const text = "HELLO";
   const buf = Buffer.from(text);
   console.log(buf.toJSON());
   const decrypted = decipher.update(buf);
@@ -38,11 +38,11 @@ test.skip('rc4', () => {
   console.log(decrypted);
 });
 
-test.skip('generate aes', () => {
-  const algorithm = 'aes-192-cbc';
-  const password = 'Password used to generate key';
+test.skip("generate aes", () => {
+  const algorithm = "aes-192-cbc";
+  const password = "Password used to generate key";
   // Use the async `crypto.scrypt()` instead.
-  const key = crypto.scryptSync(password, 'salt', 24);
+  const key = crypto.scryptSync(password, "salt", 24);
   // Use `crypto.randomBytes` to generate a random iv instead of the static iv
   // shown here.
   const iv = Buffer.alloc(16, 0); // Initialization vector.
@@ -51,12 +51,12 @@ test.skip('generate aes', () => {
   const iv2 = Buffer.alloc(16, 0); // Initialization vector.
   const decipher = crypto.createDecipheriv(algorithm, key, iv2);
 
-  const buf = Buffer.from('some clear text data');
+  const buf = Buffer.from("some clear text data");
   // let encrypted = cipher.update("some clear text data", "hex", "hex");
   const encrypted = cipher.update(buf);
   const out1 = cipher.final();
   console.log(buf.toString());
-  console.log('=============================');
+  console.log("=============================");
   // console.log(encrypted.toJSON()); console.log(encrypted.toJSON());
   // sole.log(encrypted.length);
   console.log(encrypted.length);
@@ -83,11 +83,11 @@ test.skip('generate aes', () => {
   // console.log("=============================")
 });
 
-test.skip('aes', () => {
-  const algorithm = 'aes-192-cbc';
-  const password = 'Password used to generate key';
+test.skip("aes", () => {
+  const algorithm = "aes-192-cbc";
+  const password = "Password used to generate key";
   // Use the async `crypto.scrypt()` instead.
-  const key = crypto.scryptSync(password, 'salt', 24);
+  const key = crypto.scryptSync(password, "salt", 24);
   // The IV is usually passed along with the ciphertext.
   const iv = Buffer.alloc(16, 0); // Initialization vector.
 
@@ -95,8 +95,8 @@ test.skip('aes', () => {
 
   // Encrypted using same algorithm, key and iv.
   const encrypted =
-    'e5f79c5915c02171eec6b212d5520d44480993d7d622a7c4c2da32f6efda0ffa';
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
+    "e5f79c5915c02171eec6b212d5520d44480993d7d622a7c4c2da32f6efda0ffa";
+  let decrypted = decipher.update(encrypted, "hex", "utf8");
+  decrypted += decipher.final("utf8");
   console.log(decrypted);
 });

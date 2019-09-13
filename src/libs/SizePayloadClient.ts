@@ -1,5 +1,5 @@
-import { BufferUtil } from '../utils/BufferUtil';
-import { BasicClient } from './BasicClient';
+import { BufferUtil } from "../utils/BufferUtil";
+import { BasicClient } from "./BasicClient";
 
 export class SizePayloadClient extends BasicClient {
   protected payloadSize: number | null = null;

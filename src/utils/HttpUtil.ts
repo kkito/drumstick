@@ -1,7 +1,7 @@
-import * as http from 'http';
-import * as https from 'https';
-import * as querystring from 'querystring';
-import { URL } from 'url';
+import * as http from "http";
+import * as https from "https";
+import * as querystring from "querystring";
+import { URL } from "url";
 
 export interface IHttpResponse {
   body: Buffer;
@@ -10,8 +10,8 @@ export interface IHttpResponse {
 }
 
 export class HttpUtil {
-  public static readonly METHOD_GET = 'GET';
-  public static readonly METHOD_POST = 'POST';
+  public static readonly METHOD_GET = "GET";
+  public static readonly METHOD_POST = "POST";
 
   public static get(url: string): Promise<IHttpResponse> {
     if (url.match(/^https/)) {
@@ -36,33 +36,33 @@ export class HttpUtil {
 
       const postParams = {
         headers: {
-          'Content-Length': Buffer.byteLength(postData),
-          'Content-Type': 'application/x-www-form-urlencoded',
+          "Content-Length": Buffer.byteLength(postData),
+          "Content-Type": "application/x-www-form-urlencoded"
         },
         host: theUrl.host,
-        method: 'POST',
+        method: "POST",
         path: theUrl.pathname,
-        port: theUrl.port,
+        port: theUrl.port
       };
       const postReq = https
         .request(postParams, resp => {
           const data: any[] = [];
 
           // A chunk of data has been recieved.
-          resp.on('data', chunk => {
+          resp.on("data", chunk => {
             data.push(chunk);
           });
 
           // The whole response has been received. Print out the result.
-          resp.on('end', () => {
+          resp.on("end", () => {
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
-              status: resp.statusCode,
+              status: resp.statusCode
             });
           });
         })
-        .on('error', err => {
+        .on("error", err => {
           reject(err);
         });
       postReq.write(postData);
@@ -78,33 +78,33 @@ export class HttpUtil {
 
       const postParams = {
         headers: {
-          'Content-Length': Buffer.byteLength(postData),
-          'Content-Type': 'application/x-www-form-urlencoded',
+          "Content-Length": Buffer.byteLength(postData),
+          "Content-Type": "application/x-www-form-urlencoded"
         },
         host: theUrl.host,
-        method: 'POST',
+        method: "POST",
         path: theUrl.pathname,
-        port: theUrl.port,
+        port: theUrl.port
       };
       const postReq = http
         .request(postParams, resp => {
           const data: any[] = [];
 
           // A chunk of data has been recieved.
-          resp.on('data', chunk => {
+          resp.on("data", chunk => {
             data.push(chunk);
           });
 
           // The whole response has been received. Print out the result.
-          resp.on('end', () => {
+          resp.on("end", () => {
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
-              status: resp.statusCode,
+              status: resp.statusCode
             });
           });
         })
-        .on('error', err => {
+        .on("error", err => {
           reject(err);
         });
       postReq.write(postData);
@@ -119,20 +119,20 @@ export class HttpUtil {
           const data: any[] = [];
 
           // A chunk of data has been recieved.
-          resp.on('data', chunk => {
+          resp.on("data", chunk => {
             data.push(chunk);
           });
 
           // The whole response has been received. Print out the result.
-          resp.on('end', () => {
+          resp.on("end", () => {
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
-              status: resp.statusCode,
+              status: resp.statusCode
             });
           });
         })
-        .on('error', err => {
+        .on("error", err => {
           reject(err);
         });
     });
@@ -145,20 +145,20 @@ export class HttpUtil {
           const data: any[] = [];
 
           // A chunk of data has been recieved.
-          resp.on('data', chunk => {
+          resp.on("data", chunk => {
             data.push(chunk);
           });
 
           // The whole response has been received. Print out the result.
-          resp.on('end', () => {
+          resp.on("end", () => {
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
-              status: resp.statusCode,
+              status: resp.statusCode
             });
           });
         })
-        .on('error', err => {
+        .on("error", err => {
           reject(err);
         });
     });

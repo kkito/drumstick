@@ -49,10 +49,10 @@ export class SizePayloadServerHandler extends BasicServerHandler {
       this.onPayloadPrepared(payload);
 
       // reset for next content
-      this.datas = []
-      this.dataSize = 0
-      this.onDataReceive(allBuf.slice(this.payloadSize))
-      this.payloadSize = null
+      this.datas = [];
+      this.dataSize = 0;
+      this.onDataReceive(allBuf.slice(this.payloadSize));
+      this.payloadSize = null;
     } else {
       throw new Error(`payloadSize invalid ${this.payloadSize}`);
     }

@@ -1,6 +1,6 @@
-import * as net from 'net';
-import { HttpServerHandler } from './libs/HttpServerHandler';
-import { RC4PayloadServerHandler } from './libs/RC4PayloadServerHandler';
+import * as net from "net";
+import { HttpServerHandler } from "./libs/HttpServerHandler";
+import { RC4PayloadServerHandler } from "./libs/RC4PayloadServerHandler";
 // import { BasicServerHandler } from './libs/BasicServerHandler'
 // import { SizePayloadServerHandler } from './libs/SizePayloadServerHandler'
 
@@ -10,25 +10,25 @@ class TestServer extends RC4PayloadServerHandler {
     _data: any
   ): void {
     // tslint:disable-next-line:no-empty
-    console.log('on decode data');
+    console.log("on decode data");
     console.log(_data);
     console.log(_data.toString());
-    this.send('return back hello world2');
+    this.send("return back hello world2");
     this.close();
   }
 }
 console.log(TestServer);
 
 const defaultOptions = {
-  host: '0.0.0.0',
+  host: "0.0.0.0",
   maxConnections: 100,
   port: 4812,
-  secret: 'testkey',
-  timeout: 1000 * 60 * 2, // timeout 2 minutes
+  secret: "testkey",
+  timeout: 1000 * 60 * 2 // timeout 2 minutes
 };
 
 process.argv.forEach(val => {
-  const paramSplit = val.split('=');
+  const paramSplit = val.split("=");
   if (paramSplit.length > 1) {
     const attr = paramSplit[0];
     if (Object.keys(defaultOptions).includes(attr)) {
@@ -76,6 +76,6 @@ const server = net.createServer(client => {
 server.maxConnections = defaultOptions.maxConnections;
 // npx ts-node src/server.ts secret=yourSecretKey port=4913
 server.listen(defaultOptions.port, defaultOptions.host, () => {
-  console.log('done');
+  console.log("done");
   console.log(`listen port ${defaultOptions.port}`);
 });

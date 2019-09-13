@@ -39,12 +39,12 @@ test("send multi requests", async done => {
   const sendData = BufferUtil.sizeWithBuffer(content);
   const mockCB = jest.fn();
   handler.setDataReceiveCallback(mockCB);
-  let receiveTimes = 0
+  let receiveTimes = 0;
   handler.setPayloadPrepareCallback((data: Buffer) => {
-    receiveTimes += 1
+    receiveTimes += 1;
     expect(data.toString()).toEqual("this is a test");
     // expect(mockCB.mock.calls.length).toBe(4)
-    if (receiveTimes === 5){
+    if (receiveTimes === 5) {
       done();
     }
   });

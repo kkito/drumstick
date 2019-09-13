@@ -1,6 +1,6 @@
-import { HttpUtil, IHttpResponse } from '../utils/HttpUtil';
-import { LogUtil } from '../utils/LogUtil';
-import { RC4PayloadServerHandler } from './RC4PayloadServerHandler';
+import { HttpUtil, IHttpResponse } from "../utils/HttpUtil";
+import { LogUtil } from "../utils/LogUtil";
+import { RC4PayloadServerHandler } from "./RC4PayloadServerHandler";
 
 export class HttpServerHandler extends RC4PayloadServerHandler {
   protected onDecodeData(data: Buffer): void {
@@ -21,9 +21,9 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
       .then(result => {
         this.send(
           JSON.stringify({
-            body: result.body.toString('base64'),
+            body: result.body.toString("base64"),
             headers: result.headers,
-            status: result.status,
+            status: result.status
           })
         );
         LogUtil.info(`finished request url: ${url}`);
