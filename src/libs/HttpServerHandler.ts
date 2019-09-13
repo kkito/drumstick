@@ -27,10 +27,10 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
           })
         );
         LogUtil.info(`finished request url: ${url}`);
-        this.close();
+        // this.close();
       })
       .catch(() => {
-        this.close();
+        // this.close();
       });
   }
 }
