@@ -63,7 +63,7 @@ async function main2() {
     await timeout(200);
     // const result = await client.request('http://www.baidu.com/');
     console.log(result.body.length);
-    // client.close()
+    client.close();
   } catch (err) {
     console.log(err);
   }
