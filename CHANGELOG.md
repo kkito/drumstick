@@ -4,6 +4,7 @@
 
 * fix bug response not in order in one request
 * fix bug throw exception when client ended event (server close) 
+* fix bug server request `--no-check-certificate`
 
 ### 0.3.0
 
