@@ -74,6 +74,10 @@ const server = net.createServer(client => {
 });
 
 server.maxConnections = defaultOptions.maxConnections;
+
+// no-check-certificate, TODO make it option for start server
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 // npx ts-node src/server.ts secret=yourSecretKey port=4913
 server.listen(defaultOptions.port, defaultOptions.host, () => {
   console.log("done");
