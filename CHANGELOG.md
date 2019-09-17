@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 0.4.0
+
+* cmd line for start server
+* update readme for start server 
+* update readme for client usage
+
 ### 0.3.1
 
 * fix bug response not in order in one request
