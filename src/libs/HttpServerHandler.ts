@@ -3,9 +3,13 @@ import { LogUtil } from "../utils/LogUtil";
 import { RC4PayloadServerHandler } from "./RC4PayloadServerHandler";
 
 export class HttpServerHandler extends RC4PayloadServerHandler {
+  protected pendingRequestUrls: string[] = [];
+  protected pendingResponses: { [key: string]: string } = {};
+
   protected onDecodeData(data: Buffer): void {
     const requestOptions = JSON.parse(data.toString());
     const url = requestOptions.url;
+    this.pendingRequestUrls.push(url);
     const method = requestOptions.method || HttpUtil.METHOD_GET;
     const params = requestOptions.params || {};
 
@@ -19,18 +23,33 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
     }
     response
       .then(result => {
-        this.send(
-          JSON.stringify({
-            body: result.body.toString("base64"),
-            headers: result.headers,
-            status: result.status
-          })
-        );
-        LogUtil.info(`finished request url: ${url}`);
+        const sendData = JSON.stringify({
+          body: result.body.toString("base64"),
+          headers: result.headers,
+          status: result.status
+        });
+        this.pendingResponses[url] = sendData;
+        this.sendReponses();
         // this.close();
       })
       .catch(() => {
         // this.close();
       });
+  }
+
+  protected sendReponses(urls: string[] = []): string[] {
+    const nextUrl = this.pendingRequestUrls[0];
+    if (nextUrl) {
+      const sendData = this.pendingResponses[nextUrl];
+      if (sendData) {
+        this.pendingRequestUrls.shift();
+        delete this.pendingResponses[nextUrl];
+        this.send(sendData);
+        LogUtil.info(`finished request url: ${nextUrl}`);
+        urls.push(nextUrl);
+        return this.sendReponses(urls);
+      }
+    }
+    return urls;
   }
 }
