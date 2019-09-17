@@ -3,6 +3,7 @@
 ### 0.4.0
 
 * cmd line for start server
+* cmd line for client
 * update readme for start server 
 * update readme for client usage
 
