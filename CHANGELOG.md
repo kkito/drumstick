@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 0.4.2
+
+* fix bug if secret not correct, server raise error and exit
+* fix cli client usage, options should should in front of the url param 
+
 ### 0.4.0
 
 * cmd line for start server
