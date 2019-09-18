@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { DrumstickClient } from "./libs/DrumstickClient";
 import { CliOptions } from "./utils/CliOptions";
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as net from "net";
 import { HttpServerHandler } from "./libs/HttpServerHandler";
 import { CliOptions } from "./utils/CliOptions";
