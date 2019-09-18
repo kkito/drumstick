@@ -7,30 +7,29 @@
 socket server 
 http 加密代理
 
-### TODO
 
-* buffer 内容增加长度
-* rc4 加密的 + content length的payload 文件传输
-* 客户端生成一个http内容，发送
-* server端解析http内容得到，域名等信息，发送
-* 包装一个完整的http interface的client
+## CLI usage
 
-* 自建一个http server 做proxy  https://stackoverflow.com/questions/20351637/how-to-create-a-simple-http-proxy-in-node-js
-* 启动server 启动一个 https://nodejs.org/api/net.html#net_ipc_support
-* 本地请求使用proxy  https://stackoverflow.com/questions/3862813/how-can-i-use-an-http-proxy-with-node-js-http-client
+install using npm `npm i -g @kkito/drumstick`
+
+### start server 
+
+`drumstick-server`
+
+or append some options 
+
+`drumstick-server port=5432 secret=aaaa`
+
+### client in cli
+
+`drumstick-client http://www.google.com`
+
+`drumstick-client http://www.baidu.com port=5432 secret=aaaa`
 
 
-### 启动
+## use in code
 
-## 服务器
-
-`node lib/server.js` 就会启动server， 具体内容见 `src/server.ts`
-
-
-## 客户端
-
-暴露类的形式进行调用
-
+TODO
 
 ### publish on npm 
 
