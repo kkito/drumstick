@@ -19,6 +19,10 @@
   "files": [
     "lib"
   ],
+  "bin": {
+    "drumstick-server": "./lib/cli.js",
+    "drumstick-client": "./lib/cli-client.js"
+  },
   "main": "lib/index",
   "types": "lib/index",
   "scripts": {
