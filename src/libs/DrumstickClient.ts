@@ -34,7 +34,7 @@ export class DrumstickClient extends RC4PayloadClient {
         } else {
           body = body.toString();
         }
-        resolve({ body, headers: result.headers });
+        resolve({ body, headers: result.headers, status: result.status });
       };
       this.send(JSON.stringify(params));
     });

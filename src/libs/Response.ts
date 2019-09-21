@@ -1,6 +1,7 @@
 import * as http from "http";
 export interface IDSResponse {
   body: string | Buffer;
+  status?: number;
   headers: http.IncomingHttpHeaders;
 }
 
