@@ -1,9 +1,15 @@
 ## CHANGELOG
 
-### 0.4.2
+### 0.5.2
 
 * fix bug if secret not correct, server raise error and exit
 * fix cli client usage, options should should in front of the url param 
+
+### 0.5.0
+
+* client response status
+* export Response in index
+* wrapper request with retry and error handler for DrumstickClient
 
 ### 0.4.0
 
