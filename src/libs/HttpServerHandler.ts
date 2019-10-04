@@ -12,6 +12,7 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
     this.pendingRequestUrls.push(url);
     const method = requestOptions.method || HttpUtil.METHOD_GET;
     const params = requestOptions.params || {};
+    const headers = requestOptions.headers || {};
 
     LogUtil.info(`begin request url: ${url}`);
     let response: Promise<IHttpResponse>;
@@ -19,7 +20,7 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
     if (method === HttpUtil.METHOD_POST) {
       response = HttpUtil.post(url, params);
     } else {
-      response = HttpUtil.get(url);
+      response = HttpUtil.get(url, headers);
     }
     response
       .then(result => {

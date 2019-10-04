@@ -1,9 +1,13 @@
 ## CHANGELOG
 
-### 0.5.2
+### 0.5.4
 
 * fix bug if secret not correct, server raise error and exit
 * fix cli client usage, options should should in front of the url param 
+
+### 0.5.2
+
+* http get support headers
 
 ### 0.5.0
 

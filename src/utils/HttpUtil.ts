@@ -13,11 +13,11 @@ export class HttpUtil {
   public static readonly METHOD_GET = "GET";
   public static readonly METHOD_POST = "POST";
 
-  public static get(url: string): Promise<IHttpResponse> {
+  public static get(url: string, headers?: any): Promise<IHttpResponse> {
     if (url.match(/^https/)) {
-      return this.httpsGet(url);
+      return this.httpsGet(url, headers);
     } else {
-      return this.httpGet(url);
+      return this.httpGet(url, headers);
     }
   }
 
@@ -112,52 +112,72 @@ export class HttpUtil {
     });
   }
 
-  public static httpGet(url: string): Promise<IHttpResponse> {
+  public static httpGet(url: string, headers?: any): Promise<IHttpResponse> {
+    const theUrl = new URL(url);
     return new Promise((resolve, reject) => {
       http
-        .get(url, resp => {
-          const data: any[] = [];
+        .get(
+          {
+            host: theUrl.host,
+            port: theUrl.port,
+            search: theUrl.search,
+            headers,
+            path: theUrl.pathname
+          },
+          resp => {
+            const data: any[] = [];
 
-          // A chunk of data has been recieved.
-          resp.on("data", chunk => {
-            data.push(chunk);
-          });
-
-          // The whole response has been received. Print out the result.
-          resp.on("end", () => {
-            resolve({
-              body: Buffer.concat(data),
-              headers: resp.headers,
-              status: resp.statusCode
+            // A chunk of data has been recieved.
+            resp.on("data", chunk => {
+              data.push(chunk);
             });
-          });
-        })
+
+            // The whole response has been received. Print out the result.
+            resp.on("end", () => {
+              resolve({
+                body: Buffer.concat(data),
+                headers: resp.headers,
+                status: resp.statusCode
+              });
+            });
+          }
+        )
         .on("error", err => {
           reject(err);
         });
     });
   }
 
-  public static httpsGet(url: string): Promise<IHttpResponse> {
+  public static httpsGet(url: string, headers?: any): Promise<IHttpResponse> {
+    const theUrl = new URL(url);
     return new Promise((resolve, reject) => {
       https
-        .get(url, resp => {
-          const data: any[] = [];
+        .get(
+          {
+            host: theUrl.host,
+            port: theUrl.port,
+            search: theUrl.search,
+            headers,
+            path: theUrl.pathname
+          },
+          resp => {
+            const data: any[] = [];
 
-          // A chunk of data has been recieved.
-          resp.on("data", chunk => {
-            data.push(chunk);
-          });
-
-          // The whole response has been received. Print out the result.
-          resp.on("end", () => {
-            resolve({
-              body: Buffer.concat(data),
-              headers: resp.headers,
-              status: resp.statusCode
+            // A chunk of data has been recieved.
+            resp.on("data", chunk => {
+              data.push(chunk);
             });
-          });
-        })
+
+            // The whole response has been received. Print out the result.
+            resp.on("end", () => {
+              resolve({
+                body: Buffer.concat(data),
+                headers: resp.headers,
+                status: resp.statusCode
+              });
+            });
+          }
+        )
         .on("error", err => {
           reject(err);
         });
