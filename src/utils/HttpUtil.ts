@@ -120,9 +120,8 @@ export class HttpUtil {
           {
             host: theUrl.host,
             port: theUrl.port,
-            search: theUrl.search,
             headers,
-            path: theUrl.pathname
+            path: `${theUrl.pathname}${theUrl.search}`
           },
           resp => {
             const data: any[] = [];
@@ -156,9 +155,8 @@ export class HttpUtil {
           {
             host: theUrl.host,
             port: theUrl.port,
-            search: theUrl.search,
             headers,
-            path: theUrl.pathname
+            path: `${theUrl.pathname}${theUrl.search}`
           },
           resp => {
             const data: any[] = [];
