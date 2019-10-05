@@ -10,8 +10,7 @@ const url = process.argv[2];
 async function main() {
   const client = new DrumstickClient(options, options.secret);
   try {
-    const result = await client.request(url);
-    console.log(result.headers);
+    const result = await client.ensureRequest(url, {}, "utf-8", { retry: 6 });
     console.log(result.body);
     client.close();
   } catch (err) {

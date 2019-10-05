@@ -23,11 +23,13 @@ export class DrumstickClient extends RC4PayloadClient {
       } catch (err) {
         // TODO err const
         if (
-          err !== "timeout" ||
+          err !== "timeout" &&
           err !== "This socket has been ended by the other party"
         ) {
           this.close();
           throw new Error(err);
+        } else {
+          this.resetData();
         }
       }
     }
