@@ -40,6 +40,7 @@ export class SizePayloadClient extends BasicClient {
 
   protected resetData(): void {
     super.resetData();
+    this.isCompleted = false;
     this.payloadSize = 0;
   }
 

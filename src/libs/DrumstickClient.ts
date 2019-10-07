@@ -42,6 +42,7 @@ export class DrumstickClient extends RC4PayloadClient {
     headers: any = {},
     encoding = DrumstickResponse.ENCODING_UTF8
   ): Promise<IDSResponse> {
+    this.resetData();
     const params = { url, headers };
     if (!this.isConnected()) {
       await this.connect();
