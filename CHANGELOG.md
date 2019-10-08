@@ -1,10 +1,20 @@
 ## CHANGELOG
 
+### 0.5.6
+
+* Resume breakpoint when timeout
+
 ### 0.5.4
 
 * fix bug if secret not correct, server raise error and exit
 * fix cli client usage, options should should in front of the url param 
 * bug fix : begin request url: port=4821 server stops
+
+### 0.5.3
+
+* set timeoutMillSeconds for BasicClient
+
+-------------
 
 ### 0.5.2
 
