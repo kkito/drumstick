@@ -16,26 +16,31 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
 
     LogUtil.info(`begin request url: ${url}`);
     let response: Promise<IHttpResponse>;
-    // tslint:disable-next-line:prefer-conditional-expression
-    if (method === HttpUtil.METHOD_POST) {
-      response = HttpUtil.post(url, params);
-    } else {
-      response = HttpUtil.get(url, headers);
-    }
-    response
-      .then(result => {
-        const sendData = JSON.stringify({
-          body: result.body.toString("base64"),
-          headers: result.headers,
-          status: result.status
+    try {
+      // tslint:disable-next-line:prefer-conditional-expression
+      if (method === HttpUtil.METHOD_POST) {
+        response = HttpUtil.post(url, params);
+      } else {
+        response = HttpUtil.get(url, headers);
+      }
+      response
+        .then(result => {
+          const sendData = JSON.stringify({
+            body: result.body.toString("base64"),
+            headers: result.headers,
+            status: result.status
+          });
+          this.pendingResponses[url] = sendData;
+          this.sendReponses();
+          // this.close();
+        })
+        .catch(() => {
+          // this.close();
         });
-        this.pendingResponses[url] = sendData;
-        this.sendReponses();
-        // this.close();
-      })
-      .catch(() => {
-        // this.close();
-      });
+    } catch (err) {
+      LogUtil.error(`fail request for ${url} -- ${err}`);
+      this.close();
+    }
   }
 
   protected sendReponses(urls: string[] = []): string[] {
