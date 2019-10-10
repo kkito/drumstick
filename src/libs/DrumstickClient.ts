@@ -4,7 +4,7 @@ import { DrumstickResponse, IDSResponse } from "./Response";
 
 export interface IDrumstickRequestOptions {
   retry?: number;
-  timeout?: number;
+  timeout?: number; // in millseconds
 }
 
 export class DrumstickClient extends RC4PayloadClient {
