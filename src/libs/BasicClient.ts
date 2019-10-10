@@ -91,6 +91,10 @@ export class BasicClient implements IClient {
     }
   }
 
+  public setTimeoutMillSeconds(seconds: number): void {
+    this.timeoutMillSeconds = seconds;
+  }
+
   protected setCompleteTimer(reject: (p: any) => void): void {
     if (this.completedTimer) {
       clearTimeout(this.completedTimer);
@@ -106,7 +110,7 @@ export class BasicClient implements IClient {
       } else {
         console.log("finished completed!");
       }
-    }, 10000);
+    }, this.timeoutMillSeconds);
   }
   protected resetData(): void {
     this.dataSize = 0;

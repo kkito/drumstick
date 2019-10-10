@@ -1,16 +1,16 @@
 ## CHANGELOG
 
-### 0.5.6
+### 0.6.0
 
 * Resume breakpoint when timeout
-
-### 0.5.4
-
 * fix bug if secret not correct, server raise error and exit
 * fix cli client usage, options should should in front of the url param 
-* set timeoutMillSeconds for BasicClient
 
 -------------
+
+### 0.5.6
+
+* set timeoutMillSeconds for in request options
 
 ### 0.5.3
 

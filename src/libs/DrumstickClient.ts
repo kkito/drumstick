@@ -4,6 +4,7 @@ import { DrumstickResponse, IDSResponse } from "./Response";
 
 export interface IDrumstickRequestOptions {
   retry?: number;
+  timeout?: number;
 }
 
 export class DrumstickClient extends RC4PayloadClient {
@@ -16,6 +17,12 @@ export class DrumstickClient extends RC4PayloadClient {
     requestOptions: IDrumstickRequestOptions
   ): Promise<IDSResponse> {
     const retryTimes = requestOptions.retry || 6;
+
+    // set timeout in millseconds
+    if (requestOptions.timeout) {
+      this.setTimeoutMillSeconds(requestOptions.timeout);
+    }
+
     for (let i = 0; i < retryTimes; i++) {
       try {
         const result = await this.request(url, headers, encoding);
