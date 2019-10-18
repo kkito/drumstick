@@ -32,7 +32,12 @@ export class HttpUtil {
     return new Promise((resolve, reject) => {
       const theUrl = new URL(url);
 
-      const postData = querystring.stringify(params);
+      let postData: Buffer | string;
+      if (Buffer.isBuffer(params)) {
+        postData = params;
+      } else {
+        postData = querystring.stringify(params);
+      }
 
       const postParams = {
         headers: {
@@ -74,7 +79,12 @@ export class HttpUtil {
     return new Promise((resolve, reject) => {
       const theUrl = new URL(url);
 
-      const postData = querystring.stringify(params);
+      let postData: Buffer | string;
+      if (Buffer.isBuffer(params)) {
+        postData = params;
+      } else {
+        postData = querystring.stringify(params);
+      }
 
       const postParams = {
         headers: {
