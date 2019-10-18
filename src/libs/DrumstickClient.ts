@@ -4,6 +4,7 @@ import { DrumstickResponse, IDSResponse } from "./Response";
 
 export interface IDrumstickRequestOptions {
   retry?: number;
+  body?: any;
   timeout?: number; // in millseconds
 }
 
@@ -25,7 +26,12 @@ export class DrumstickClient extends RC4PayloadClient {
 
     for (let i = 0; i < retryTimes; i++) {
       try {
-        const result = await this.request(url, headers, encoding);
+        const result = await this.request(
+          url,
+          headers,
+          encoding,
+          requestOptions.body
+        );
         return result;
       } catch (err) {
         // TODO err const
@@ -47,10 +53,14 @@ export class DrumstickClient extends RC4PayloadClient {
   public async request(
     url: string,
     headers: any = {},
-    encoding = DrumstickResponse.ENCODING_UTF8
+    encoding = DrumstickResponse.ENCODING_UTF8,
+    httpBody?: any // 传入buffer直接传过去，非buffer 会 buildQueryString
   ): Promise<IDSResponse> {
     this.resetData();
-    const params = { url, headers };
+    const params: any = { url, headers };
+    if (httpBody) {
+      params.params = httpBody;
+    }
     if (!this.isConnected()) {
       await this.connect();
     }

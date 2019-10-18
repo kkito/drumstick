@@ -8,6 +8,10 @@
 
 -------------
 
+### 0.5.8
+
+* support post with binary data
+
 ### 0.5.6
 
 * set timeoutMillSeconds for in request options
