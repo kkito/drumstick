@@ -11,7 +11,10 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
     const url = requestOptions.url;
     this.pendingRequestUrls.push(url);
     const method = requestOptions.method || HttpUtil.METHOD_GET;
-    const params = requestOptions.params || {};
+    let params = requestOptions.params || {};
+    if (typeof params === "string" || params instanceof String) {
+      params = Buffer.from(params as string, "base64");
+    }
     const headers = requestOptions.headers || {};
 
     LogUtil.info(`begin request url: ${url}`);

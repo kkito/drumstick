@@ -26,12 +26,15 @@ export class DrumstickClient extends RC4PayloadClient {
 
     for (let i = 0; i < retryTimes; i++) {
       try {
-        const result = await this.request(
-          url,
-          headers,
-          encoding,
-          requestOptions.body
-        );
+        let requestBody: any = {};
+        if (requestOptions.body) {
+          if (Buffer.isBuffer(requestOptions.body)) {
+            requestBody = requestOptions.body.toString("base64");
+          } else {
+            requestBody = requestOptions.body;
+          }
+        }
+        const result = await this.request(url, headers, encoding, requestBody);
         return result;
       } catch (err) {
         // TODO err const
