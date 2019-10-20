@@ -28,6 +28,64 @@ export class HttpUtil {
       return this.httpPost(url, params);
     }
   }
+
+  public static request(
+    url: string,
+    method: string = "GET",
+    headers?: any,
+    body?: Buffer
+  ): Promise<IHttpResponse> {
+    return new Promise((resolve, reject) => {
+      const theUrl = new URL(url);
+
+      let schema: {
+        request: (
+          options: http.RequestOptions,
+          callback?: (res: http.IncomingMessage) => void
+        ) => http.ClientRequest;
+      } = http;
+      if (theUrl.protocol.startsWith("https")) {
+        schema = https;
+      }
+      if (body) {
+        headers["Content-Length"] = body.length;
+      }
+      const client = schema.request(
+        {
+          port: theUrl.port,
+          hostname: theUrl.hostname,
+          method,
+          path: theUrl.pathname + theUrl.search,
+          headers
+        },
+        resp => {
+          const data: any[] = [];
+
+          // A chunk of data has been recieved.
+          resp.on("data", chunk => {
+            data.push(chunk);
+          });
+
+          // The whole response has been received. Print out the result.
+          resp.on("end", () => {
+            resolve({
+              body: Buffer.concat(data),
+              headers: resp.headers,
+              status: resp.statusCode
+            });
+          });
+        }
+      );
+      if (body) {
+        client.write(body);
+      }
+      client.on("error", err => {
+        reject(err);
+      });
+      client.end();
+    });
+  }
+
   public static httpsPost(url: string, params: any): Promise<IHttpResponse> {
     return new Promise((resolve, reject) => {
       const theUrl = new URL(url);
