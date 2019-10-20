@@ -1,12 +1,16 @@
 ## CHANGELOG
 
-### 0.6.0
+### TODO
 
 * Resume breakpoint when timeout
 * fix bug if secret not correct, server raise error and exit
 * fix cli client usage, options should should in front of the url param 
 
 -------------
+
+### 0.6.0
+
+* support all kinds of method , PUT , OPTIONS, etc
 
 ### 0.5.8
 
