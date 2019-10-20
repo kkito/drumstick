@@ -5,11 +5,50 @@ import { DrumstickResponse, IDSResponse } from "./Response";
 export interface IDrumstickRequestOptions {
   retry?: number;
   body?: any;
+  method?: string;
   timeout?: number; // in millseconds
 }
 
 export class DrumstickClient extends RC4PayloadClient {
   protected onDataHandler?: (data: Buffer) => void;
+
+  public async ensureRequestV2(
+    url: string,
+    method = "GET",
+    headers: any = {},
+    body?: Buffer,
+    requestOptions?: IDrumstickRequestOptions
+  ): Promise<IDSResponse> {
+    if (!requestOptions) {
+      requestOptions = {};
+    }
+    const retryTimes = requestOptions.retry || 6;
+
+    // set timeout in millseconds
+    if (requestOptions.timeout) {
+      this.setTimeoutMillSeconds(requestOptions.timeout);
+    }
+
+    for (let i = 0; i < retryTimes; i++) {
+      try {
+        const result = await this.requestV2(url, method, headers, body);
+        return result;
+      } catch (err) {
+        // TODO err const
+        if (
+          err !== "timeout" &&
+          err !== "This socket has been ended by the other party"
+        ) {
+          this.close();
+          throw new Error(err);
+        } else {
+          this.resetData();
+        }
+      }
+    }
+    this.close();
+    throw new Error("timeout for retry");
+  }
 
   public async ensureRequest(
     url: string,
@@ -89,6 +128,41 @@ export class DrumstickClient extends RC4PayloadClient {
         }
         resolve({
           body,
+          headers: result.headers,
+          status: result.status
+        });
+      };
+      this.send(JSON.stringify(params));
+    });
+  }
+
+  public async requestV2(
+    url: string,
+    method = "GET",
+    headers: any = {},
+    body?: Buffer
+  ): Promise<IDSResponse> {
+    this.resetData();
+    const params: any = { url, headers, version: 2, method };
+    if (body) {
+      params.body = body.toString("base64");
+    }
+    if (!this.isConnected()) {
+      await this.connect();
+    }
+    return new Promise((resolve, reject) => {
+      this.onErrorHandler = (err: string | Error) => {
+        console.log("onErrorHandler!");
+        reject(err);
+      };
+      this.onDataHandler = data => {
+        const result = JSON.parse(data.toString());
+        const resBody: Buffer = Buffer.from(
+          result.body,
+          DrumstickResponse.ENCODING_BASE64
+        );
+        resolve({
+          body: resBody,
           headers: result.headers,
           status: result.status
         });
