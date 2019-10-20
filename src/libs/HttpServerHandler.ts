@@ -11,38 +11,62 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
     const url = requestOptions.url;
     this.pendingRequestUrls.push(url);
     const method = requestOptions.method || HttpUtil.METHOD_GET;
-    let params = requestOptions.params || {};
-    if (typeof params === "string" || params instanceof String) {
-      params = Buffer.from(params as string, "base64");
-    }
+    const version = requestOptions.version || 1;
     const headers = requestOptions.headers || {};
-
-    LogUtil.info(`begin request url: ${url}`);
-    let response: Promise<IHttpResponse>;
-    try {
-      // tslint:disable-next-line:prefer-conditional-expression
-      if (method === HttpUtil.METHOD_POST) {
-        response = HttpUtil.post(url, params);
-      } else {
-        response = HttpUtil.get(url, headers);
-      }
-      response
-        .then(result => {
-          const sendData = JSON.stringify({
-            body: result.body.toString("base64"),
-            headers: result.headers,
-            status: result.status
+    if (version === 2) {
+      const body = requestOptions.body || null;
+      try {
+        HttpUtil.request(url, method, headers, body)
+          .then(result => {
+            const sendData = JSON.stringify({
+              body: result.body.toString("base64"),
+              headers: result.headers,
+              status: result.status
+            });
+            this.pendingResponses[url] = sendData;
+            this.sendReponses();
+            // this.close();
+          })
+          .catch(() => {
+            // this.close();
           });
-          this.pendingResponses[url] = sendData;
-          this.sendReponses();
-          // this.close();
-        })
-        .catch(() => {
-          // this.close();
-        });
-    } catch (err) {
-      LogUtil.error(`fail request for ${url} -- ${err}`);
-      this.close();
+      } catch (err) {
+        LogUtil.error(`fail request for ${url} -- ${err}`);
+        this.close();
+      }
+    } else {
+      let params = requestOptions.params || {};
+      if (typeof params === "string" || params instanceof String) {
+        params = Buffer.from(params as string, "base64");
+      }
+
+      LogUtil.info(`begin request url: ${url}`);
+      let response: Promise<IHttpResponse>;
+      try {
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (method === HttpUtil.METHOD_POST) {
+          response = HttpUtil.post(url, params);
+        } else {
+          response = HttpUtil.get(url, headers);
+        }
+        response
+          .then(result => {
+            const sendData = JSON.stringify({
+              body: result.body.toString("base64"),
+              headers: result.headers,
+              status: result.status
+            });
+            this.pendingResponses[url] = sendData;
+            this.sendReponses();
+            // this.close();
+          })
+          .catch(() => {
+            // this.close();
+          });
+      } catch (err) {
+        LogUtil.error(`fail request for ${url} -- ${err}`);
+        this.close();
+      }
     }
   }
 
