@@ -16,7 +16,13 @@ export class HttpServerHandler extends RC4PayloadServerHandler {
     if (version === 2) {
       const body = requestOptions.body || null;
       try {
-        HttpUtil.request(url, method, headers, body)
+        let newBody: Buffer | undefined;
+        if (body) {
+          // fix base buffer and to base64 body
+          newBody = Buffer.from(body, "base64");
+        }
+        console.log(newBody);
+        HttpUtil.request(url, method, headers, newBody)
           .then(result => {
             const sendData = JSON.stringify({
               body: result.body.toString("base64"),
