@@ -18,10 +18,15 @@ export class RC4PayloadServerHandler extends SizePayloadServerHandler {
   }
 
   protected onPayloadPrepared(payload: Buffer): void {
-    const content = RC4Util.decode(payload, this.rc4Key);
-    // console.log("payload prepareddd");
-    // console.log(content.toString());
-    this.onDecodeData(content);
+    try {
+      const content = RC4Util.decode(payload, this.rc4Key);
+      // console.log("payload prepareddd");
+      // console.log(content.toString());
+      this.onDecodeData(content);
+    } catch (err) {
+      LogUtil.error(`onPayloadPrepared -- ${err}`);
+      this.close();
+    }
   }
 
   protected onDecodeData(
