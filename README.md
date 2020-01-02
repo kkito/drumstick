@@ -29,7 +29,7 @@ or append some options
 
 ## use in code
 
-TODO
+TODO test
 
 ### publish on npm 
 
