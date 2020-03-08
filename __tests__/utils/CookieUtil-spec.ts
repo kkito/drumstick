@@ -1,5 +1,5 @@
 import * as tough from "tough-cookie";
-import { CookieUtil } from "../../src/utils/CookieUtil";
+import { CookieUtil, jar } from "../../src/utils/CookieUtil";
 import { HttpUtil } from "../../src/utils/HttpUtil";
 
 function buildCookieStr(
@@ -38,6 +38,8 @@ test("getCookie And setCookie", async done => {
   await CookieUtil.setCookie(url, headers);
   result = await CookieUtil.getCookie(url);
   expect(result).toBe("uid=test; uid2=test");
+  const newJar = tough.CookieJar.deserializeSync(JSON.stringify(jar.toJSON()));
+  expect(JSON.stringify(jar.toJSON())).toEqual(JSON.stringify(newJar.toJSON()));
 
   done();
 });
