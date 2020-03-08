@@ -2,6 +2,7 @@ import * as http from "http";
 import * as https from "https";
 import * as querystring from "querystring";
 import { URL } from "url";
+import { CookieUtil } from "./CookieUtil";
 
 export interface IHttpResponse {
   body: Buffer;
@@ -67,7 +68,8 @@ export class HttpUtil {
           });
 
           // The whole response has been received. Print out the result.
-          resp.on("end", () => {
+          resp.on("end", async () => {
+            await CookieUtil.setCookie(url, resp.headers);
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
@@ -117,7 +119,8 @@ export class HttpUtil {
           });
 
           // The whole response has been received. Print out the result.
-          resp.on("end", () => {
+          resp.on("end", async () => {
+            await CookieUtil.setCookie(url, resp.headers);
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
@@ -164,7 +167,8 @@ export class HttpUtil {
           });
 
           // The whole response has been received. Print out the result.
-          resp.on("end", () => {
+          resp.on("end", async () => {
+            await CookieUtil.setCookie(url, resp.headers);
             resolve({
               body: Buffer.concat(data),
               headers: resp.headers,
@@ -200,7 +204,8 @@ export class HttpUtil {
             });
 
             // The whole response has been received. Print out the result.
-            resp.on("end", () => {
+            resp.on("end", async () => {
+              await CookieUtil.setCookie(url, headers);
               resolve({
                 body: Buffer.concat(data),
                 headers: resp.headers,
@@ -235,7 +240,8 @@ export class HttpUtil {
             });
 
             // The whole response has been received. Print out the result.
-            resp.on("end", () => {
+            resp.on("end", async () => {
+              await CookieUtil.setCookie(url, headers);
               resolve({
                 body: Buffer.concat(data),
                 headers: resp.headers,
