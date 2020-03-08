@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import * as tough from "tough-cookie";
 import { LogUtil } from "./LogUtil";
 
@@ -89,6 +89,14 @@ export class CookieUtil {
     await this._setSingleCookieStr(url, setCookieStr);
     this.serializeJar();
   }
+
+  public static clearJar(): tough.CookieJar {
+    if (existsSync(jarCacheFile)) {
+      unlinkSync(jarCacheFile);
+    }
+    jar = this.initJar();
+    return jar;
+  }
 }
 
-export const jar = CookieUtil.initJar();
+export let jar = CookieUtil.initJar();

@@ -1,6 +1,6 @@
 {
   "name": "@kkito/drumstick",
-  "version": "v0.6.5",
+  "version": "v0.7.0",
   "description": "drumstick",
   "license": "MIT",
   "repository": "https://github.com/kkito/drumstick",
@@ -21,6 +21,7 @@
   ],
   "bin": {
     "drumstick-server": "./lib/cli.js",
+    "drumstick-cookie": "./lib/cli-cookie.js",
     "drumstick-client": "./lib/cli-client.js"
   },
   "main": "lib/index",

@@ -13,6 +13,7 @@ function buildCookieStr(
 const setCookieStr = buildCookieStr();
 // const setCookieStr = '__cfduid=dd4; expires=Mon, 06-Apr-88 23:21:37 GMT; path=/; domain=.test.com'
 test("usage", () => {
+  CookieUtil.clearJar();
   const result = tough.Cookie.parse(setCookieStr);
   if (result) {
     expect(result.value).not.toBeNull();
@@ -22,6 +23,7 @@ test("usage", () => {
 });
 
 test("getCookie And setCookie", async done => {
+  CookieUtil.clearJar();
   const headers: any = {};
   headers[CookieUtil.SetCookeKey] = setCookieStr;
   let url = "http://www.baidu.com/test";
@@ -45,6 +47,7 @@ test("getCookie And setCookie", async done => {
 });
 
 test.skip("正式的请求查看cookie", async done => {
+  CookieUtil.clearJar();
   const res = await HttpUtil.request("http://www.baidu.com");
   console.log(res.body);
   const cookie = await CookieUtil.getCookie("http://www.baidu.com/test");
