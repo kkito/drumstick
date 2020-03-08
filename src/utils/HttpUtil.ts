@@ -30,13 +30,31 @@ export class HttpUtil {
     }
   }
 
+  public static async _prepareCooke(
+    url: string,
+    headers?: any,
+    body?: Buffer
+  ): Promise<any> {
+    if (!headers) {
+      headers = {};
+    }
+    if (body) {
+      headers["Content-Length"] = body.length;
+    }
+    const cookieStr = await CookieUtil.getCookie(url);
+    if (cookieStr) {
+      headers.cookie = cookieStr;
+    }
+    return headers;
+  }
+
   public static request(
     url: string,
     method: string = "GET",
     headers?: any,
     body?: Buffer
   ): Promise<IHttpResponse> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const theUrl = new URL(url);
 
       let schema: {
@@ -48,9 +66,7 @@ export class HttpUtil {
       if (theUrl.protocol.startsWith("https")) {
         schema = https;
       }
-      if (body) {
-        headers["Content-Length"] = body.length;
-      }
+      headers = await this._prepareCooke(url, headers, body);
       const client = schema.request(
         {
           port: theUrl.port,
@@ -89,7 +105,7 @@ export class HttpUtil {
   }
 
   public static httpsPost(url: string, params: any): Promise<IHttpResponse> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const theUrl = new URL(url);
 
       let postData: Buffer | string;
@@ -99,11 +115,12 @@ export class HttpUtil {
         postData = querystring.stringify(params);
       }
 
+      const headers = await this._prepareCooke(url, {
+        "Content-Length": Buffer.byteLength(postData),
+        "Content-Type": "application/x-www-form-urlencoded"
+      });
       const postParams = {
-        headers: {
-          "Content-Length": Buffer.byteLength(postData),
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers,
         host: theUrl.host,
         method: "POST",
         path: theUrl.pathname,
@@ -137,7 +154,7 @@ export class HttpUtil {
   }
 
   public static httpPost(url: string, params: any): Promise<IHttpResponse> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const theUrl = new URL(url);
 
       let postData: Buffer | string;
@@ -147,11 +164,12 @@ export class HttpUtil {
         postData = querystring.stringify(params);
       }
 
+      const headers = await this._prepareCooke(url, {
+        "Content-Length": Buffer.byteLength(postData),
+        "Content-Type": "application/x-www-form-urlencoded"
+      });
       const postParams = {
-        headers: {
-          "Content-Length": Buffer.byteLength(postData),
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers,
         host: theUrl.host,
         method: "POST",
         path: theUrl.pathname,
@@ -186,7 +204,8 @@ export class HttpUtil {
 
   public static httpGet(url: string, headers?: any): Promise<IHttpResponse> {
     const theUrl = new URL(url);
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      headers = await this._prepareCooke(url, headers);
       http
         .get(
           {
@@ -222,7 +241,8 @@ export class HttpUtil {
 
   public static httpsGet(url: string, headers?: any): Promise<IHttpResponse> {
     const theUrl = new URL(url);
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      headers = await this._prepareCooke(url, headers);
       https
         .get(
           {

@@ -1,5 +1,6 @@
 import * as tough from "tough-cookie";
 import { CookieUtil } from "../../src/utils/CookieUtil";
+import { HttpUtil } from "../../src/utils/HttpUtil";
 
 function buildCookieStr(
   key = "uid",
@@ -38,5 +39,14 @@ test("getCookie And setCookie", async done => {
   result = await CookieUtil.getCookie(url);
   expect(result).toBe("uid=test; uid2=test");
 
+  done();
+});
+
+test.skip("正式的请求查看cookie", async done => {
+  const res = await HttpUtil.request("http://www.baidu.com");
+  console.log(res.body);
+  const cookie = await CookieUtil.getCookie("http://www.baidu.com/test");
+  console.log(cookie);
+  await HttpUtil.request("http://www.baidu.com");
   done();
 });
