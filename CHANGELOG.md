@@ -6,11 +6,17 @@
 * fix bug if secret not correct, server raise error and exit
 * fix cli client usage, options should should in front of the url param 
 
+### 0.7.2
+
+* switch use cookie or not
+* cookie seprate with users
+* if client give the cookie, merge cookies
+
+-------------
+
 ### 0.7.0
 
 * use https://github.com/salesforce/tough-cookie support cookie
-
--------------
 
 ### 0.6.0
 
